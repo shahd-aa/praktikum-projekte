@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+ <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=_211duZxBEGZ8gl3WWBG2vfFp2ioSPqfxm-e6EJCiT40c1d4qtDn3p3IHNEmpKX3aOfHA_0bDjsQZVcDlOzSkhJrRU0rLtqoVQTtHo0eG-OAL2GDtsfDcNpP_9i8mNrJYZSjh6RxRvyGxC5nhHiB8uE-h7DzYHwWoLl_xzcDLbGIDDmbEMw-PFiNWicf98cl3urg-mLfPClpfijugMdBP6Ut4REsexN9ZfySaYEzSoME6gRIBuesytC58lLZt5Nm" charset="UTF-8"></script></head>
+ <body>
+  <!-- SVG "arc" mit gelber Bogen -->
+  <div class="svg-container">
+   <div>
+    <svg height="400" version="1.0" viewbox="0 0 650 250" width="700" xmlns="http://www.w3.org/2000/svg">
+     <!-- bogen -->
+     <path d="M 100 100 
+             A 100 100 0 0 0 200 200" fill="none" id="arc" stroke="#FFB200" stroke-width="30" transform="rotate(90, 200, 200)">
+     </path>
+     <!-- a -->
+     <circle cx="320" cy="220" fill="none" id="a" r="60" stroke="black" stroke-width="20">
+     </circle>
+     <!-- || -->
+     <path d="M 380 150 
+             L 380 150 
+             L 380 290 
+             Z
+             M 420 150
+             L 420 150 
+             L 420 290
+             Z
+             M 450 150
+             L 450 150 
+             L 450 170" fill="none" id="lines" stroke="#000000" stroke-width="20">
+     </path>
+     <text>
+     </text>
+     <!-- Maske: Weißes Rechteck als Hintergrund, schwarzes Rechteck für "C"-Form -->
+     <mask id="mask" mask-type="luminance">
+      <rect fill="white" height="150" width="160" x="460" y="145">
+      </rect>
+      <rect fill="black" height="70" width="70" x="550" y="185">
+      </rect>
+     </mask>
+     <!-- C -->
+     <circle cx="535" cy="220" fill="white" id="c" mask="url(#mask)" r="65" stroke="black" stroke-width="20">
+     </circle>
+    </svg>
+   </div>
+   <!-- SVG solutions -->
+   <div>
+    <svg height="150" version="1.0" viewbox="0 0 650 50" width="700" xmlns="http://www.w3.org/2000/svg">
+     <!-- solutions -->
+     <path d="M23.63 76.14l1.43-1.46c.34.41.66.7.96.88.3.18.61.27.95.27.41 0 .74-.11.97-.34.24-.22.36-.53.36-.92 0-.51-.51-.96-1.55-1.35a5.15 5.15 0 01-2.34-1.36 2.6 2.6 0 01-.6-1.76c0-.92.32-1.69.96-2.3a3.38 3.38 0 012.42-.92 3.8 3.8 0 013.14 1.48l-1.35 1.4a3.26 3.26 0 00-.86-.7 1.86 1.86 0 00-.9-.23c-.37 0-.67.1-.9.32-.23.2-.35.49-.35.83 0 .48.49.9 1.46 1.23l.81.3c.75.29 1.31.7 1.69 1.2.37.52.56 1.15.56 1.89 0 .94-.32 1.71-.97 2.32-.64.6-1.48.9-2.5.9-.72 0-1.36-.13-1.92-.4a4.07 4.07 0 01-1.47-1.28M34.94 72.35c0 1.03.31 1.88.95 2.57a3.14 3.14 0 002.4 1.02c.96 0 1.76-.34 2.4-1.02a3.6 3.6 0 00.95-2.57 3.6 3.6 0 00-.96-2.55 3.16 3.16 0 00-2.4-1.03c-.95 0-1.74.34-2.38 1.02a3.59 3.59 0 00-.96 2.56zm-2.1 0a5.51 5.51 0 011.58-3.88 5.23 5.23 0 013.87-1.56 5.4 5.4 0 015.06 3.32c.26.66.4 1.36.4 2.12s-.14 1.47-.4 2.13a5.28 5.28 0 01-2.94 2.92 5.64 5.64 0 01-5.99-1.16 5.3 5.3 0 01-1.59-3.89M46.56 67.14l2.05-.14v8.6h3.8l-.49 1.97h-5.36V67.14M54.78 67.14l2.06-.17v6.65c0 .77.15 1.33.43 1.68.28.34.74.51 1.36.51.63 0 1.08-.17 1.36-.51.28-.35.42-.9.42-1.68v-6.48l2.07-.17v6.8a4.1 4.1 0 01-1 2.96 3.76 3.76 0 01-2.85 1.05 3.76 3.76 0 01-2.84-1.05 4.1 4.1 0 01-1.01-2.96v-6.63M67.4 77.72V69.1h-2.84l.53-1.96h6.94v1.96h-2.56v8.47l-2.07.15M74.45 77.7V67.14l2.08-.14v10.57l-2.08.13M81.44 72.35c0 1.03.32 1.88.96 2.57a3.14 3.14 0 002.4 1.02c.96 0 1.76-.34 2.4-1.02a3.6 3.6 0 00.95-2.57c0-1.02-.32-1.87-.96-2.55a3.16 3.16 0 00-2.4-1.03c-.95 0-1.75.34-2.39 1.02a3.59 3.59 0 00-.96 2.56zm-2.1 0a5.49 5.49 0 011.59-3.88 5.25 5.25 0 013.86-1.56 5.39 5.39 0 015.06 3.32c.27.66.4 1.36.4 2.12s-.13 1.47-.4 2.13a5.28 5.28 0 01-2.94 2.92 5.65 5.65 0 01-5.98-1.16 5.3 5.3 0 01-1.59-3.89M93 77.7V66.84l6.3 6.28v-5.98l2.07-.14v10.87l-6.3-6.26v5.96L93 77.7M104.05 76.14l1.43-1.46c.34.41.66.7.96.88.3.18.62.27.96.27.4 0 .73-.11.97-.34.24-.22.35-.53.35-.92 0-.51-.51-.96-1.55-1.35a5.15 5.15 0 01-2.34-1.36 2.6 2.6 0 01-.6-1.76c0-.92.32-1.69.96-2.3a3.38 3.38 0 012.43-.92 3.81 3.81 0 013.14 1.48l-1.36 1.4a3.24 3.24 0 00-.86-.7 1.86 1.86 0 00-.9-.23c-.37 0-.67.1-.9.32-.23.2-.35.49-.35.83 0 .48.49.9 1.46 1.23l.82.3c.74.29 1.3.7 1.68 1.2.38.52.56 1.15.56 1.89 0 .94-.32 1.71-.96 2.32-.65.6-1.49.9-2.51.9-.72 0-1.36-.13-1.92-.4a4.07 4.07 0 01-1.47-1.28" fill="#FFFFFF" transform="translate(160, -300) 
+                    scale(4, 4)">
+      <animate attributename="fill" begin="2s" dur="1.5s" fill="freeze" from="#FFFFFF" to="#000000">
+      </animate>
+     </path>
+    </svg>
+   </div>
+  </div>
+  <div class="text-container">
+   <h2>
+    &amp; "c:/Users/arc/Desktop/SA_Praktikum von 22.9 bis 2.10/.venv/Scripts/python.exe" "c:/Users/arc/Desktop/SA_Praktikum von 22.9 bis 2.10/wetter_website/python.py"
+   </h2>
+  </div>
+  <!-- GSAP-Bibliothek Animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
+  </script>
+  <script>
+   //Buchstaben, die animiert werden sollen
+    const parts = {
+      arc: document.querySelector("#arc"),
+      a: document.querySelector("#a"),
+      lines: document.querySelector("#lines"),
+      c: document.querySelector("#c"),
+    };
+
+    // animiert die Buchstaben
+    for (let key in parts) {
+      if (parts.hasOwnProperty(key)) {
+        const value = parts[key];
+        const length = value.getTotalLength();
+
+        // Länge der Buchstabe
+        value.style.strokeDasharray = length;
+        value.style.strokeDashoffset = length;
+
+        // Animation
+        gsap.to(value, {
+          strokeDashoffset: 0,
+          duration: 2,
+          ease: "power1.inOut"
+        });
+      }
+    }
+  </script>
+ </body>
+</html>
