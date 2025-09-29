@@ -2,99 +2,102 @@ import requests
 from bs4 import BeautifulSoup
 import json
 
-# fetch → check → parse → extract → structure → output
-# create checkpoints with print
-
-# fetch url
+# Fetch URL
 url = "https://www.dwd.de/DE/leistungen/klimadatendeutschland/statliste/statlex_html.html;jsessionid=E1D047C421FA29EB8FA59B318ED088F6.live11054?view=nasPublication&nn=16102"
-
-# get response
 response = requests.get(url)
-print(f"checkpoint 1: {response}")
+print(f"checkpoint 1: response {response.status_code}")
 
-# response 200 ? -> parse into soup
+# Check if the response is successful
 if response.status_code == 200:
-    print(f"checkpoint 2: code is 200!")
+    print(f"checkpoint 2: page fetched successfully!")
+
+    # Parse the page content
     soup = BeautifulSoup(response.text, "html.parser")
-    # extract data from big table
-    print(f"checkpoint 3: data parsed")
     table = soup.find("table")
+
+    # Check for table
     if table:
-        print(f"checkpoint 4: table was found!")
-    stripped_table = table.get_text(strip=True)
-    print(f"checkpoint 5: text was extracted!")
-    
-# create empty array of rows -> find rows (but skip header)
-rows = table.find_all("tr")[1:]
-print(f"checkpoint 6: all rows found!")
+        print(f"checkpoint 3: table found!")
 
-filled_rows = []
-printed = False
+        # Extract all rows (skip the header row)
+        rows = table.find_all("tr")[1:]
+        print(f"checkpoint 4: rows extracted, found {len(rows)} rows!")
 
-# for every row, find cell
-for row in rows:
-    current_row_data = []
-    cells = row.find_all("td")
-    if not printed and cells:
-        print(f"checkpoint 7: all cells found!")
-        printed = True
-        
-    # extract text from cell
-    for cell in cells:
-      stripped_cell = cell.get_text(strip=True)
-      current_row_data.append(stripped_cell)
-      
-      printed = False
-      if not printed and stripped_cell:
-        print(f"checkpoint 8: extracted text from cells!") 
-        printed = True
-      # append text from cell into empty array of rows
-    filled_rows.append(current_row_data)
+        # Empty list to store row data
+        filled_rows = []
 
-print(f"checkpoint 9: appended!")
+        # Loop through each row and extract text from cells
+        for row in rows:
+            current_row_data = []
+            cells = row.find_all("td")
 
-# get all headers
-headers = [th.get_text().strip() for th in table.find_all("th")]
+            # Skip rows that don't have enough cells
+            if len(cells) >= 4:
+                current_row_data.append(cells[0].get_text(strip=True))  # Stationsname
+                current_row_data.append(cells[1].get_text(strip=True))  # Stations_ID
+                current_row_data.append(cells[3].get_text(strip=True))  # Stationskennung
 
-# empty array of data -> get every row ->
-data = []
-for row in filled_rows:
-    # take first header and first data point & pair together
-    data.append(dict(zip(headers, row)))
+                # Only add the row if it has the necessary data
+                if len(current_row_data) == 3:
+                    filled_rows.append(current_row_data)
+                else:
+                    print(f"warning: row with missing data skipped: {row}")
+            else:
+                print(f"warning: row with insufficient cells skipped: {row}")
 
-# convert to json and print
-    json_data = json.dumps(data, indent=4, ensure_ascii=False)
-    print(json_data)
-    
-# bad response ? -> show error 
+        print(f"checkpoint 5: rows filled with data! Total rows: {len(filled_rows)}")
+
+        # Convert rows to dictionary format
+        data = [
+            {"Stationsname": row[0], "Stations_ID": row[1], "Kennung": row[2]}
+            for row in filled_rows
+        ]
+        print(f"checkpoint 6: data converted into dictionaries! Total entries: {len(data)}")
+
+        # Save raw data to a JSON file
+        with open("stations.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+        print("checkpoint 7: stations.json created!")
+
+        # Load the data from the saved JSON
+        with open("stations.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        # Filter unique cities based on station name
+        unique_data = []
+        seen = set()
+
+        for entry in data:
+            station_name = entry.get("Stationsname", "")
+            station_id = entry.get("Stations_ID", "")
+            stationskennung = entry.get("Kennung", "")
+
+            # Check for valid station name and ensure it isn't a duplicate
+            if (
+                station_name
+                and station_name not in seen
+                and not station_name.isdigit()
+            ):
+                unique_data.append(
+                    {
+                        "name": station_name,
+                        "id": station_id,
+                        "kennung": stationskennung,
+                    }
+                )
+                seen.add(station_name)
+            else:
+                print(f"warning: invalid or duplicate entry found: {entry}")
+
+        print(f"checkpoint 8: {len(unique_data)} unique cities found")
+
+        # Save cleaned and unique data to another JSON file
+        with open("cities.json", "w", encoding="utf-8") as f:
+            json.dump(unique_data, f, indent=4, ensure_ascii=False)
+        print("checkpoint 9: duplicates removed and saved to 'cities.json'")
+
+    else:
+        print("error: table not found on page.")
+
 else:
-    print(f"Error fetching the page. Status code: {response.status_code}")
-# load the JSON data from file
-with open('stations.json', 'r', encoding='utf-8') as f:
-    data = json.load(f)  # This will load the JSON as a Python list of dictionaries
-    print(f"checkpoint 10: json converted in dict!")
-
-# create a list to store unique cities based on 'name'
-unique_data = []
-seen = set()
-
-# iterate over the data and add unique cities
-for entry in data:
-    
-# check if the 'name' key exists before trying to access it
-  if "name" in entry:
-        city_name = entry["name"]
-        if city_name not in seen:
-            unique_data.append(entry)
-            seen.add(city_name)
-  # handle the case where 'name' doesn't exist in the entry
-  else:
-        # Handle the case where 'name' doesn't exist in the entry
-        print(f"Warning: 'name' key missing in entry: {entry}")
-        
-# output the cleaned list (you can save it to a file)
-with open('cities.json', 'w', encoding='utf-8') as f:
-    json.dump(unique_data, f, indent=4, ensure_ascii=False)
-    
-# print duplicates removed as well as new json file
-print("duplicates removed and saved to 'cities.json'")
+    print(f"error fetching the page. status code: {response.status_code}")
