@@ -2,34 +2,29 @@
 <html>
 
 <head>
-    <title>Wetter App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetter App</title>
     <!-- darker grotesque font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
-    <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=OZPdMOEohw7KrRPd2a-5HLZW2caM_wx8SLhBrVqslAR4twKtWDs_fgmvRRmDmwivWovBdt2SZuVw2ISCg0-c-UuU1W8q1ojSixJFMssKMnanr2RRXHo05-25Zh51LZ11NDTxK0htgJ8wJhbex4QmSOmnORvy7KlLq3d8A5UFtvCuofisatQmHAGFYWMSIWv_C3ys6G-TKKzyYGbX1EwH9hEBRqcAmyaAuDu6RFJOt28" charset="UTF-8"></script><script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 
 <body>
     <div class="grid-container">
-        <div class="bg-panel nav-sidebar">
-            <div class="nav-icon" id="weather-icon"></div>
-            <div class="nav-icon" id="current-location-icon"></div>
-            <div class="nav-icon" id="other-locations-icon"></div>
-        </div>
 
         <div class="main-menu">
             <div class="search-section">
-                <input class="bg-panel" id="search-bar" type="text"
-                    placeholder="Ort suchen..." name="search">
+                <input class="bg-panel" id="search-bar" type="text" placeholder="Ort suchen..." name="search">
                 <div class="hidden" id="dropdown-menu">
-                    <div class="dropdown-suggestion">Suggestion 1</div>
-                    <div class="dropdown-suggestion">Suggestion 2</div>
-                    <div class="dropdown-suggestion">Suggestion 2</div>
+                    <div class="dropdown-suggestion"></div>
+                    <div class="dropdown-suggestion"></div>
+                    <div class="dropdown-suggestion"></div>
                 </div>
             </div>
 
@@ -37,35 +32,99 @@
                 <div class="current-weather-info">
                     <h1> [platzhalter für stadt] </h1>
                     <h3> [bsp: überwiegend Regen] </h3>
-                    <span class="temperature-display"> </span>
+                    <span class="temperature-display"></span>
                 </div>
                 <div class="current-weather-icon"></div>
             </div>
 
 
             <div class="bg-panel hourly-grid">
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+                <div class="right-border">
+                    <p>9:00</p>
+                    <p id="temp-for-9"></p>
+                </div>
+                <div class="right-border">
+                    <p>12:00</p>
+                    <p id="temp-for-12"></p>
+                </div>
+                <div class="right-border">
+                    <p>15:00</p>
+                    <p id="temp-for-15"></p>
+                </div>
+                <div class="right-border">
+                    <p>18:00</p>
+                    <p id="temp-for-18"></p>
+                </div>
+                <div>
+                    <p>21:00</p>
+                    <p id="temp-for-21"></p>
+                </div>
             </div>
 
             <div class="bg-panel weather-info-grid">
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+                <div>
+                    <div style="display: flex; align-items: center;">
+                        <p class="info-display-title">Windrichtung</p>
+                        <img src="./assets/icons/wind_direction.png" width="40" height="50" alt="icon" />
+                    </div>
+                    <p class="info-display-data wind-direction-display">test</p>
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center;">
+                        <p class="info-display-title">Windböen</p>
+                        <img src="./assets/icons/wind_direction.png" width="40" height="50" alt="icon" />
+                    </div>
+                    <p class="info-display-data wind-gust-display">test</p>
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center;">
+                        <p class="info-display-title">Sonnenaufgang</p>
+                        <img src="./assets/icons/sunrise.png" width="50" height="50" alt="icon" />
+                    </div>
+                    <p class="info-display-data sunrise-display">test</p>
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center;">
+                        <p class="info-display-title">Sonnenuntergang</p>
+                        <img src="./assets/icons/sunset.png" width="50" height="50" alt="icon" />
+                    </div>
+                    <p class="info-display-data sunset-display">test</p>
+                </div>
             </div>
         </div>
 
         <div class="bg-panel weekly-weather-sidebar">
-            <div class="pseudo-border forecast-day"></div>
-            <div class="pseudo-border forecast-day"></div>
-            <div class="pseudo-border forecast-day"></div>
-            <div class="pseudo-border forecast-day"></div>
-            <div class="pseudo-border forecast-day"></div>
-            <div class="pseudo-border forecast-day"></div>
-            <div class="forecast-day"></div>
+            <div class="pseudo-border forecast-day">
+                <p class="day-1-date day-date">Date</p>
+                <p class="day-1-min min-temp">WeatherMin</p>
+                <p class="day-1-max max-temp">WeatherMax</p>
+                <p class="day-1-precip precipitation">Precipitation</p>
+                <div class="day-1-icon forecast-icon"></div>
+            </div>
+            <div class="pseudo-border forecast-day">
+                <p class="day-2-date day-date">Date</p>
+                <p class="day-2-min min-temp">WeatherMin</p>
+                <p class="day-2-max max-temp">WeatherMax</p>
+                <p class="day-2-precip precipitation">Precipitation</p>
+                <div class="day-2-icon forecast-icon"></div>
+            </div>
+            <div class="pseudo-border forecast-day">
+                <p class="day-3-date day-date">Date</p>
+                <p class="day-3-min min-temp">WeatherMin</p>
+                <p class="day-3-max max-temp">WeatherMax</p>
+                <p class="day-3-precip precipitation">Precipitation</p>
+                <div class="day-3-icon forecast-icon">Icon</div>
+            </div>
+            <div class="pseudo-border forecast-day">
+                <p class="day-4-date day-date">Date</p>
+                <p class="day-4-min min-temp">WeatherMin</p>
+                <p class="day-4-max max-temp">WeatherMax</p>
+                <p class="day-4-precip precipitation">Precipitation</p>
+                <div class="day-4-icon forecast-icon">Icon</div>
+            </div>
+            <div class="graph forecast-day">
+                <canvas id="temperature-chart" width="400px" height="240px"></canvas>
+            </div>
         </div>
     </div>
 
